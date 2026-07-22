@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+    id        Int @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+   role      String   @default("STUDENT")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  questionSets  QuestionSet[]
+  testAttempts  TestAttempt[]
+}
+
+model QuestionSet {
+ id        Int @id @default(autoincrement())
+ 
+  title       String
+  description String?
+  timeLimit   Int      @default(600)
+  createdById Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  createdBy    User          @relation(fields: [createdById], references: [id])
+  questions    Question[]
+  testAttempts TestAttempt[]
+}
+
+model Question {
+  id        Int @id @default(autoincrement())
+ 
+  questionSetId  Int
+  text           String
+  options        String
+  correctAnswer  String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  questionSet QuestionSet @relation(fields: [questionSetId], references: [id], onDelete: Cascade)
+  answers     Answer[]
+}
+
+model TestAttempt {
+  id        Int @id @default(autoincrement())
+ 
+  userId         Int
+  questionSetId  Int
+  score          Int?
+  totalQuestions Int       @default(0)
+  correctCount   Int       @default(0)
+  startTime      DateTime  @default(now())
+  endTime        DateTime?
+  submitted      Boolean   @default(false)
+
+  user        User       @relation(fields: [userId], references: [id])
+  questionSet QuestionSet @relation(fields: [questionSetId], references: [id])
+  answers     Answer[]
+}
+
+model Answer {
+  id             Int   @id @default(autoincrement())
+  testAttemptId  Int
+  questionId     Int
+  selectedAnswer String?
+  isCorrect      Boolean?
+  createdAt      DateTime @default(now())
+
+  testAttempt TestAttempt @relation(fields: [testAttemptId], references: [id], onDelete: Cascade)
+  question    Question   @relation(fields: [questionId], references: [id])
+}

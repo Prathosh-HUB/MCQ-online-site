@@ -1,0 +1,52 @@
+﻿npx : ΓÜá You are using a non-standard "NODE_ENV" value in your environment. This creates inconsistencies in the project 
+and is strongly advised against. Read more: https://nextjs.org/docs/messages/non-standard-node-env
+At line:1 char:83
++ ... view/my-app; $env:NODE_ENV="development"; npx next build 2>&1 | Out-F ...
++                                               ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (ΓÜá You are usi...andard-node-env:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Γû▓ Next.js 16.2.10 (Turbopack)
+- Environments: .env
+
+ΓÜá The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: 
+https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 2 errors:
+./src/app/login/page.js:83:20
+Expected '</', got 'jsx text'
+  [90m81 |[0m
+  [90m82 |[0m               [33mRegister[0m
+[31m[1m>[0m [90m83 |[0m             </[33mLink[0m>
+  [90m   |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m84 |[0m           </p>
+  [90m   |[0m [31m[1m^^^^^^^^^^[0m
+  [90m85 |[0m         </div>
+  [90m86 |[0m     </div>
+  [90m87 |[0m   );
+
+Parsing ecmascript source code failed
+
+
+./src/app/page.js:65:24
+Expected '</', got 'jsx text'
+  [90m63 |[0m                 <svg className=[32m"w-4 h-4"[0m fill=[32m"none"[0m stroke=[32m"currentColor"[0m 
+viewBox=[32m"0 0 24...[0m
+  [90m64 |[0m                   <path strokeLinecap=[32m"round"[0m strokeLinejoin=[32m"round"[0m 
+strokeWidth={[35m2[0m} d=[32m"M1...[0m
+[31m[1m>[0m [90m65 |[0m                 </path>
+  [90m   |[0m                        [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m66 |[0m               </svg>
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^[0m
+  [90m67 |[0m               </[33mLink[0m>
+  [90m68 |[0m               <[33mLink[0m href=[32m"/login"[0m className=[32m"px-8 py-3.5 text-base font-medium 
+text-text-s...[0m
+  [90m69 |[0m             </div>
+
+Parsing ecmascript source code failed
+
+
+    at <unknown> (./src/app/login/page.js:83:20)
+    at <unknown> (./src/app/page.js:65:24)
