@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { useAuth } from "@/lib/AuthContext";
+import { useAuth } from "@/components/lib/AuthContext";
+import ImagePreview from "@/components/ImagePreview";
 import { Toaster, toast } from "sonner";
 
 export default function TestPage() {
@@ -279,10 +280,29 @@ export default function TestPage() {
                   {currentQuestion.text}
                 </h2>
 
-                {/* Options */}
+                {/* Question Images */}
+                {currentQuestion.imageUrls && Array.isArray(currentQuestion.imageUrls) && currentQuestion.imageUrls.filter(Boolean).length > 0 && (
+                  <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {currentQuestion.imageUrls.filter(Boolean).map((url, idx) => (
+                      <div key={idx} className="flex justify-center bg-slate-800/50 rounded-xl p-2 border border-white/5">
+                        <ImagePreview src={url} alt={`Question illustration ${idx + 1}`}>
+                          <img
+                            src={url}
+                            alt={`Question illustration ${idx + 1}`}
+                            className="max-w-full max-h-80 w-auto h-auto rounded-lg object-contain cursor-zoom-in"
+                            onError={(e) => { e.target.style.display = "none"; }}
+                          />
+                        </ImagePreview>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+{/* Options */}
                 <div className="space-y-3">
                   {currentQuestion.options.map((option, optIndex) => {
                     const isSelected = answers[currentQuestion.id] === option;
+                    const optImage = currentQuestion.optionImages?.[optIndex];
                     return (
                       <button
                         key={optIndex}
@@ -304,6 +324,16 @@ export default function TestPage() {
                               </svg>
                             )}
                           </div>
+                          {optImage && (
+                            <ImagePreview src={optImage} alt="">
+                              <img
+                                src={optImage}
+                                alt=""
+                                className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg object-cover border border-white/10 cursor-zoom-in"
+                                onError={(e) => { e.target.style.display = "none"; }}
+                              />
+                            </ImagePreview>
+                          )}
                           <span className="text-sm sm:text-base">{option}</span>
                         </div>
                       </button>

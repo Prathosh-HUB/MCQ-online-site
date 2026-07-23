@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/lib/AuthContext";
+import { useAuth } from "@/components/lib/AuthContext";
 import { Toaster, toast } from "sonner";
 
 export default function DashboardPage() {
@@ -18,6 +18,11 @@ export default function DashboardPage() {
     }
 
     if (user) {
+      // Redirect admin users to admin dashboard
+      if (user.role === "ADMIN") {
+        router.push("/admin/dashboard");
+        return;
+      }
       fetchQuestionSets();
     }
   }, [user, loading]);

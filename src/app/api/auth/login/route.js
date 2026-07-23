@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { prisma } from "@/lib/prisma";
-import { signToken } from "@/lib/jwt";
+import { prisma } from "@/components/lib/prisma";
+import { signToken } from "@/components/lib/jwt";
 
 export async function POST(request) {
   try {
@@ -16,6 +16,14 @@ export async function POST(request) {
 
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
+      return NextResponse.json(
+        { error: "Invalid email or password" },
+        { status: 401 }
+      );
+    }
+
+    // Block admin users from logging in via student login
+    if (user.role === "ADMIN") {
       return NextResponse.json(
         { error: "Invalid email or password" },
         { status: 401 }

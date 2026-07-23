@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { getAuthenticatedUser } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import { getAuthenticatedUser } from "@/components/lib/auth";
+import { prisma } from "@/components/lib/prisma";
 
 export async function GET(request, { params }) {
   try {
@@ -54,6 +54,8 @@ export async function GET(request, { params }) {
     // Convert options safely
     const questions = testAttempt.questionSet.questions.map((q) => {
       let options = q.options;
+      let optionImages = q.optionImages;
+      let imageUrls = q.imageUrls;
 
       try {
         if (typeof options === "string") {
@@ -65,9 +67,27 @@ export async function GET(request, { params }) {
         options = q.options.split(",");
       }
 
+      try {
+        if (typeof optionImages === "string") {
+          optionImages = JSON.parse(optionImages);
+        }
+      } catch (err) {
+        optionImages = null;
+      }
+
+      try {
+        if (typeof imageUrls === "string") {
+          imageUrls = JSON.parse(imageUrls);
+        }
+      } catch (err) {
+        imageUrls = null;
+      }
+
       return {
         ...q,
         options,
+        optionImages,
+        imageUrls,
       };
     });
 

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAuth } from "@/lib/AuthContext";
+import { useAuth } from "@/components/lib/AuthContext";
 import { Toaster, toast } from "sonner";
 
 export default function RegisterPage() {

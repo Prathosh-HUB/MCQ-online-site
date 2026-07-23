@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/components/lib/prisma";
 
 export async function GET(request) {
   try {
@@ -31,6 +31,8 @@ export async function GET(request) {
     const parsed = questions.map((q) => ({
       ...q,
       options: JSON.parse(q.options),
+      optionImages: q.optionImages ? JSON.parse(q.optionImages) : null,
+      imageUrls: q.imageUrls ? JSON.parse(q.imageUrls) : null,
     }));
 
     return NextResponse.json({
@@ -53,7 +55,7 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    const { questionSetId, text, options, correctAnswer } = await request.json();
+    const { questionSetId, text, imageUrls, optionImages, options, correctAnswer } = await request.json();
 
     if (!questionSetId || !text || !options || !correctAnswer) {
       return NextResponse.json(
@@ -91,6 +93,8 @@ export async function POST(request) {
       data: {
         questionSetId: parseInt(questionSetId),
         text,
+        imageUrls: imageUrls && imageUrls.length > 0 ? JSON.stringify(imageUrls.filter(Boolean)) : null,
+        optionImages: optionImages && optionImages.length > 0 ? JSON.stringify(optionImages) : null,
         options: JSON.stringify(options),
         correctAnswer,
       },

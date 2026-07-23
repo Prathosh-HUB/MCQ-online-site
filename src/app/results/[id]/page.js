@@ -2,8 +2,9 @@
 // import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { useAuth } from "@/lib/AuthContext";
+import { useAuth } from "@/components/lib/AuthContext";
 import { Toaster, toast } from "sonner";
+import ImagePreview from "@/components/ImagePreview";
 
 export default function ResultsPage() {
   const { id } = useParams();
@@ -208,10 +209,28 @@ export default function ResultsPage() {
 
                 <h3 className="text-lg text-white mb-4">{question.text}</h3>
 
+                {question.imageUrls && Array.isArray(question.imageUrls) && question.imageUrls.filter(Boolean).length > 0 && (
+                  <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {question.imageUrls.filter(Boolean).map((url, idx) => (
+                      <div key={idx} className="flex justify-center bg-slate-800/50 rounded-lg p-2 border border-white/5">
+                        <ImagePreview src={url} alt={`Question illustration ${idx + 1}`}>
+                          <img
+                            src={url}
+                            alt={`Question illustration ${idx + 1}`}
+                            className="max-w-full max-h-48 w-auto h-auto rounded-lg object-contain cursor-zoom-in"
+                            onError={(e) => { e.target.style.display = "none"; }}
+                          />
+                        </ImagePreview>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
                 <div className="space-y-2 mb-4">
                   {question.options.map((option, optIndex) => {
                     const isSelectedOption = selectedAnswer === option;
                     const isCorrectOption = question.correctAnswer === option;
+                    const optImage = question.optionImages?.[optIndex];
 
                     let optionStyle = "bg-white/5 border-white/10 text-slate-300";
                     if (isCorrectOption) {
@@ -240,6 +259,16 @@ export default function ResultsPage() {
                             </svg>
                           )}
                         </div>
+                        {optImage && (
+                          <ImagePreview src={optImage} alt="">
+                            <img
+                              src={optImage}
+                              alt=""
+                              className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover border border-white/10 cursor-zoom-in"
+                              onError={(e) => { e.target.style.display = "none"; }}
+                            />
+                          </ImagePreview>
+                        )}
                         <span className="text-sm">{option}</span>
                         {isCorrectOption && (
                           <span className="ml-auto text-xs font-medium text-emerald-400">Correct Answer</span>

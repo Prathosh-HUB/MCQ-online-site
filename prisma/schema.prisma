@@ -40,6 +40,8 @@ model Question {
  
   questionSetId  Int
   text           String
+  imageUrls      String?
+  optionImages   String?
   options        String
   correctAnswer  String
   createdAt      DateTime @default(now())

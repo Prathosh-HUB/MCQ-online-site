@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { useAuth } from "@/lib/AuthContext";
+import { useAuth } from "@/components/lib/AuthContext";
 import Link from "next/link";
 
 export default function CertificatePage() {
@@ -188,15 +188,19 @@ export default function CertificatePage() {
                     <div class="score-item">
                       <div class="score-value">${testAttempt?.score || 0}%</div>
                       <div class="score-label">Score</div>
+                    </div>
                     <div class="score-item">
                       <div class="score-value">${testAttempt?.correctCount || 0}/${testAttempt?.totalQuestions || 0}</div>
                       <div class="score-label">Correct</div>
+                    </div>
                     <div class="score-item">
                       <div class="score-value">${testAttempt ? new Date(testAttempt.endTime).toLocaleDateString() : ""}</div>
                       <div class="score-label">Date</div>
+                    </div>
                   </div>
                   <p class="footer-text">MCQ Interview - Practice &amp; Prepare for Interviews</p>
                 </div>
+              </div>
               <script>window.print(); window.close();</script>
             </body>
           </html>
@@ -210,6 +214,7 @@ export default function CertificatePage() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-slate-900">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
     );
   }
 
@@ -241,6 +246,7 @@ export default function CertificatePage() {
             Back to Dashboard
           </Link>
         </div>
+      </div>
     );
   }
 
@@ -271,6 +277,7 @@ export default function CertificatePage() {
             Back to Dashboard
           </Link>
         </div>
+      </div>
     );
   }
 
@@ -313,6 +320,7 @@ export default function CertificatePage() {
             <div className="absolute top-10 left-10 w-32 h-32 border border-amber-400 rounded-full"></div>
             <div className="absolute bottom-10 right-10 w-48 h-48 border border-amber-400 rounded-full"></div>
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-amber-400 rounded-full"></div>
+          </div>
 
           <div className="relative z-10 flex flex-col items-center justify-center h-full px-8 py-10 text-center">
             {/* Medal/Award SVG Icon */}
@@ -345,11 +353,13 @@ export default function CertificatePage() {
               <div className="text-center">
                 <div className="text-2xl sm:text-3xl text-white font-bold">{score}%</div>
                 <div className="text-xs text-slate-400 uppercase tracking-wider">Score</div>
+              </div>
               <div className="text-center">
                 <div className="text-2xl sm:text-3xl text-white font-bold">
                   {testAttempt?.correctCount}/{testAttempt?.totalQuestions}
                 </div>
                 <div className="text-xs text-slate-400 uppercase tracking-wider">Correct</div>
+              </div>
               <div className="text-center">
                 <div className="text-lg sm:text-xl text-white font-bold">
                   {testAttempt?.endTime
@@ -357,13 +367,16 @@ export default function CertificatePage() {
                     : ""}
                 </div>
                 <div className="text-xs text-slate-400 uppercase tracking-wider">Date</div>
+              </div>
             </div>
 
             <p className="text-xs text-slate-500 tracking-wider">
               MCQ Interview — Practice &amp; Prepare for Interviews
             </p>
           </div>
+        </div>
       </main>
     </div>
   );
 }
+

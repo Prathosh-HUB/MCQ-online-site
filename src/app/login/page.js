@@ -3,7 +3,7 @@
 import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { useAuth } from "@/lib/AuthContext";
+import { useAuth } from "@/components/lib/AuthContext";
 import { Toaster, toast } from "sonner";
 
 function LoginForm() {
@@ -38,10 +38,10 @@ function LoginForm() {
       <Toaster position="top-center" richColors />
       <div className="relative w-full max-w-md animate-fade-in-up">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 mb-4">
+          {/* <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 mb-4">
             <span className="text-white font-bold text-xl">M</span>
-          </div>
-          <h1 className="text-2xl font-bold text-white">Welcome Back</h1>
+          </div> */}
+          <h1 className="text-2xl font-bold text-white">Welcome to The Assessment</h1>
           <p className="mt-1 text-slate-400">Sign in to continue your tests</p>
         </div>
         <div className="rounded-2xl bg-slate-800 border border-slate-700 p-8 shadow-lg">

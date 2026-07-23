@@ -42,17 +42,17 @@ export default function AdminDashboard() {
         <Link href="/admin/students" className="bg-slate-800 rounded-xl p-8 hover:bg-slate-700 transition-all hover:scale-[1.02] border border-slate-700 hover:border-blue-500/50">
           <div className="text-4xl mb-4">👥</div>
           <h2 className="text-xl font-bold">Students</h2>
-          <p className="text-slate-400 mt-2">View, Add & Remove Students</p>
+          <p className="text-slate-400 mt-2">View, Add &amp; Remove Students</p>
         </Link>
         <Link href="/admin/question-set" className="bg-slate-800 rounded-xl p-8 hover:bg-slate-700 transition-all hover:scale-[1.02] border border-slate-700 hover:border-blue-500/50">
           <div className="text-4xl mb-4">📚</div>
           <h2 className="text-xl font-bold">Question Sets</h2>
-          <p className="text-slate-400 mt-2">Create & Manage Test Sets</p>
+          <p className="text-slate-400 mt-2">Create &amp; Manage Test Sets</p>
         </Link>
         <Link href="/admin/question" className="bg-slate-800 rounded-xl p-8 hover:bg-slate-700 transition-all hover:scale-[1.02] border border-slate-700 hover:border-blue-500/50">
           <div className="text-4xl mb-4">❓</div>
           <h2 className="text-xl font-bold">Questions</h2>
-          <p className="text-slate-400 mt-2">Add & Edit Questions</p>
+          <p className="text-slate-400 mt-2">Add &amp; Edit Questions</p>
         </Link>
         <Link href="/admin/results" className="bg-slate-800 rounded-xl p-8 hover:bg-slate-700 transition-all hover:scale-[1.02] border border-slate-700 hover:border-blue-500/50">
           <div className="text-4xl mb-4">📊</div>

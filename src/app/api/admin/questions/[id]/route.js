@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/components/lib/prisma";
 
 export async function PUT(request, { params }) {
   try {
     const { id } = await params;
-    const { text, options, correctAnswer } = await request.json();
+    const { text, imageUrls, optionImages, options, correctAnswer } = await request.json();
 
     const question = await prisma.question.findUnique({
       where: { id: parseInt(id) },
@@ -35,6 +35,8 @@ export async function PUT(request, { params }) {
       where: { id: parseInt(id) },
       data: {
         ...(text !== undefined && { text }),
+        ...(imageUrls !== undefined && { imageUrls: imageUrls && imageUrls.length > 0 ? JSON.stringify(imageUrls.filter(Boolean)) : null }),
+        ...(optionImages !== undefined && { optionImages: optionImages && optionImages.length > 0 ? JSON.stringify(optionImages) : null }),
         ...(options !== undefined && { options: JSON.stringify(options) }),
         ...(correctAnswer !== undefined && { correctAnswer }),
       },
@@ -44,6 +46,8 @@ export async function PUT(request, { params }) {
       question: {
         ...updated,
         options: JSON.parse(updated.options),
+        optionImages: updated.optionImages ? JSON.parse(updated.optionImages) : null,
+        imageUrls: updated.imageUrls ? JSON.parse(updated.imageUrls) : null,
       },
     });
   } catch (error) {
