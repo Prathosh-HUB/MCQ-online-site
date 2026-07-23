@@ -55,12 +55,7 @@ export async function POST(request) {
     });
 
     if (existingAttempt) {
-      // Reset startTime to now for accurate time tracking on resume
-      const updatedAttempt = await prisma.testAttempt.update({
-        where: { id: existingAttempt.id },
-        data: { startTime: new Date() },
-      });
-      return NextResponse.json({ testAttempt: updatedAttempt });
+      return NextResponse.json({ testAttempt: existingAttempt });
     }
 
     const testAttempt = await prisma.testAttempt.create({

@@ -55,27 +55,31 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    const { questionSetId, text, imageUrls, optionImages, options, correctAnswer } = await request.json();
+    const { questionSetId, text, questionType, imageUrls, optionImages, options, correctAnswer } = await request.json();
 
-    if (!questionSetId || !text || !options || !correctAnswer) {
+    const qType = questionType || "MCQ";
+
+    if (!questionSetId || !text || !correctAnswer) {
       return NextResponse.json(
         { error: "All fields are required" },
         { status: 400 }
       );
     }
 
-    if (!Array.isArray(options) || options.length < 2) {
-      return NextResponse.json(
-        { error: "At least 2 options are required" },
-        { status: 400 }
-      );
-    }
+    if (qType === "MCQ") {
+      if (!Array.isArray(options) || options.length < 2) {
+        return NextResponse.json(
+          { error: "At least 2 options are required for MCQ" },
+          { status: 400 }
+        );
+      }
 
-    if (!options.includes(correctAnswer)) {
-      return NextResponse.json(
-        { error: "Correct answer must be one of the options" },
-        { status: 400 }
-      );
+      if (!options.includes(correctAnswer)) {
+        return NextResponse.json(
+          { error: "Correct answer must be one of the options" },
+          { status: 400 }
+        );
+      }
     }
 
     const questionSet = await prisma.questionSet.findUnique({
@@ -93,9 +97,10 @@ export async function POST(request) {
       data: {
         questionSetId: parseInt(questionSetId),
         text,
+        questionType: qType,
         imageUrls: imageUrls && imageUrls.length > 0 ? JSON.stringify(imageUrls.filter(Boolean)) : null,
         optionImages: optionImages && optionImages.length > 0 ? JSON.stringify(optionImages) : null,
-        options: JSON.stringify(options),
+        options: qType === "MCQ" ? JSON.stringify(options) : JSON.stringify([]),
         correctAnswer,
       },
     });

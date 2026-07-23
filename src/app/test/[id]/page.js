@@ -298,48 +298,63 @@ export default function TestPage() {
                   </div>
                 )}
 
-{/* Options */}
-                <div className="space-y-3">
-                  {currentQuestion.options.map((option, optIndex) => {
-                    const isSelected = answers[currentQuestion.id] === option;
-                    const optImage = currentQuestion.optionImages?.[optIndex];
-                    return (
-                      <button
-                        key={optIndex}
-                        onClick={() => handleAnswerSelect(currentQuestion.id, option)}
-                        disabled={isSubmitted}
-                        className={`w-full text-left p-4 rounded-xl border transition-all ${
-                          isSelected
-                            ? "bg-blue-600/20 border-blue-500 text-white ring-1 ring-blue-500"
-                            : "bg-white/5 border-white/10 text-slate-300 hover:bg-white/10 hover:border-slate-500"
-                        } ${isSubmitted ? "cursor-not-allowed opacity-75" : ""}`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                            isSelected ? "border-blue-500 bg-blue-500" : "border-slate-500"
-                          }`}>
-                            {isSelected && (
-                              <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                              </svg>
+{/* Options - MCQ or Fill Blanks */}
+                {currentQuestion.questionType === "FILL_BLANKS" ? (
+                  <div>
+                    <label className="block text-sm font-medium text-slate-400 mb-2">Your Answer</label>
+                    <input
+                      type="text"
+                      value={answers[currentQuestion.id] || ""}
+                      onChange={(e) => handleAnswerSelect(currentQuestion.id, e.target.value)}
+                      disabled={isSubmitted}
+                      className="w-full rounded-xl bg-white/5 border border-white/10 px-5 py-4 text-white text-lg placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                      placeholder="Type your answer here..."
+                    />
+                    <p className="text-xs text-slate-500 mt-2">Answer is case-insensitive</p>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {currentQuestion.options.map((option, optIndex) => {
+                      const isSelected = answers[currentQuestion.id] === option;
+                      const optImage = currentQuestion.optionImages?.[optIndex];
+                      return (
+                        <button
+                          key={optIndex}
+                          onClick={() => handleAnswerSelect(currentQuestion.id, option)}
+                          disabled={isSubmitted}
+                          className={`w-full text-left p-4 rounded-xl border transition-all ${
+                            isSelected
+                              ? "bg-blue-600/20 border-blue-500 text-white ring-1 ring-blue-500"
+                              : "bg-white/5 border-white/10 text-slate-300 hover:bg-white/10 hover:border-slate-500"
+                          } ${isSubmitted ? "cursor-not-allowed opacity-75" : ""}`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
+                              isSelected ? "border-blue-500 bg-blue-500" : "border-slate-500"
+                            }`}>
+                              {isSelected && (
+                                <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                </svg>
+                              )}
+                            </div>
+                            {optImage && (
+                              <ImagePreview src={optImage} alt="">
+                                <img
+                                  src={optImage}
+                                  alt=""
+                                  className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg object-cover border border-white/10 cursor-zoom-in"
+                                  onError={(e) => { e.target.style.display = "none"; }}
+                                />
+                              </ImagePreview>
                             )}
+                            <span className="text-sm sm:text-base">{option}</span>
                           </div>
-                          {optImage && (
-                            <ImagePreview src={optImage} alt="">
-                              <img
-                                src={optImage}
-                                alt=""
-                                className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg object-cover border border-white/10 cursor-zoom-in"
-                                onError={(e) => { e.target.style.display = "none"; }}
-                              />
-                            </ImagePreview>
-                          )}
-                          <span className="text-sm sm:text-base">{option}</span>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
 
                 {/* Navigation Buttons */}
                 <div className="flex items-center justify-between mt-8 pt-6 border-t border-white/10">

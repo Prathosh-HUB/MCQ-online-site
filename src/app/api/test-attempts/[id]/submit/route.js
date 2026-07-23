@@ -54,7 +54,14 @@ export async function POST(request, { params }) {
 
     for (const question of testAttempt.questionSet.questions) {
       const selectedAnswer = answers[question.id] || null;
-      const isCorrect = selectedAnswer === question.correctAnswer;
+      let isCorrect;
+
+      if (question.questionType === "FILL_BLANKS") {
+        // Fill-in-the-blanks are not graded - stored as reference only
+        isCorrect = null;
+      } else {
+        isCorrect = selectedAnswer === question.correctAnswer;
+      }
 
       if (isCorrect) {
         correctCount++;

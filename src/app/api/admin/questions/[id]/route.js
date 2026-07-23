@@ -4,7 +4,7 @@ import { prisma } from "@/components/lib/prisma";
 export async function PUT(request, { params }) {
   try {
     const { id } = await params;
-    const { text, imageUrls, optionImages, options, correctAnswer } = await request.json();
+    const { text, questionType, imageUrls, optionImages, options, correctAnswer } = await request.json();
 
     const question = await prisma.question.findUnique({
       where: { id: parseInt(id) },
@@ -17,6 +17,8 @@ export async function PUT(request, { params }) {
       );
     }
 
+    const qType = questionType || question.questionType;
+
     if (options && !Array.isArray(options)) {
       return NextResponse.json(
         { error: "Options must be an array" },
@@ -24,7 +26,7 @@ export async function PUT(request, { params }) {
       );
     }
 
-    if (correctAnswer && options && !options.includes(correctAnswer)) {
+    if (qType === "MCQ" && correctAnswer && options && !options.includes(correctAnswer)) {
       return NextResponse.json(
         { error: "Correct answer must be one of the options" },
         { status: 400 }
@@ -35,6 +37,7 @@ export async function PUT(request, { params }) {
       where: { id: parseInt(id) },
       data: {
         ...(text !== undefined && { text }),
+        ...(questionType !== undefined && { questionType: qType }),
         ...(imageUrls !== undefined && { imageUrls: imageUrls && imageUrls.length > 0 ? JSON.stringify(imageUrls.filter(Boolean)) : null }),
         ...(optionImages !== undefined && { optionImages: optionImages && optionImages.length > 0 ? JSON.stringify(optionImages) : null }),
         ...(options !== undefined && { options: JSON.stringify(options) }),

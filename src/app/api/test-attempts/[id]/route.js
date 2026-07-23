@@ -85,6 +85,7 @@ export async function GET(request, { params }) {
 
       return {
         ...q,
+        questionType: q.questionType || "MCQ",
         options,
         optionImages,
         imageUrls,

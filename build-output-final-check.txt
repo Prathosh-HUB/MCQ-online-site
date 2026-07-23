@@ -1,0 +1,59 @@
+▲ Next.js 16.2.10 (Turbopack)
+- Environments: .env
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.3s
+  Running TypeScript ...
+  Finished TypeScript in 894ms ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/28) ...
+  Generating static pages using 11 workers (7/28) 
+  Generating static pages using 11 workers (14/28) 
+  Generating static pages using 11 workers (21/28) 
+✓ Generating static pages using 11 workers (28/28) in 763ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin/dashboard
+├ ○ /admin/login
+├ ○ /admin/question
+├ ○ /admin/question-set
+├ ○ /admin/results
+├ ○ /admin/students
+├ ○ /admin/students/create
+├ ƒ /api/admin/analytics
+├ ƒ /api/admin/create-student
+├ ƒ /api/admin/login
+├ ƒ /api/admin/question-sets
+├ ƒ /api/admin/question-sets/[id]
+├ ƒ /api/admin/questions
+├ ƒ /api/admin/questions/[id]
+├ ƒ /api/admin/results
+├ ƒ /api/admin/students
+├ ƒ /api/admin/students/[id]
+├ ƒ /api/admin/upload
+├ ƒ /api/auth/login
+├ ƒ /api/auth/logout
+├ ƒ /api/auth/me
+├ ƒ /api/auth/register
+├ ƒ /api/question-sets
+├ ƒ /api/question-sets/[id]
+├ ƒ /api/test-attempts
+├ ƒ /api/test-attempts/[id]
+├ ƒ /api/test-attempts/[id]/submit
+├ ƒ /certificate/[id]
+├ ○ /dashboard
+├ ○ /login
+├ ○ /register
+├ ƒ /results/[id]
+└ ƒ /test/[id]
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
